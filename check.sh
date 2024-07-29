@@ -32,7 +32,10 @@ elif [ -f "$1" ]; then
     
     echo "Execute Testing...${COLORED}" $(printf "$2" | ./a.out) "${DEFAULT}"
     
-    echo "\033[0;33m\nType \n     leaks -atExit -q -- ./a.out\nto leaks check${DEFAULT}"
+    echo "\033[0;33m\nType"
+    echo "for MACOS:     leaks -atExit -q -- ./a.out"
+    echo "for LINUX:     valgrind --tool=memcheck --leak-check=yes  ./main.out"
+    echo "to leaks check${DEFAULT}"
     
     # echo "Leaks Testing..." $(printf "$2" | leaks -atExit -q -- ./a.out)
 else
