@@ -15,22 +15,26 @@ elif [ -f "$1" ]; then
     clang-format -i $1
     rm .clang-format
     
-    echo "CPP-CHECKing...${COLORED}" $(cppcheck --enable=all --suppress=missingIncludeSystem $1) "${DEFAULT}"
+    echo "CPP-CHECKing...${COLORED}"
+    echo $(cppcheck --enable=all --suppress=missingIncludeSystem $1)
+    echo "${DEFAULT}"
     
     echo "Flag-leaks Testing...${COLORED}"
     # echo $(gcc -fsanitize=address $1)
     # echo $(printf "$2" | ./a.out)
-    
     echo $(gcc -fsanitize=leak $1) $(printf "$2" | ./a.out)
-    
     # echo $(gcc -fsanitize=undefined $1)
     # echo $(printf "$2" | ./a.out)
-    
     echo "${DEFAULT}"
     
-    echo "Compilation -W Testing...${COLORED}" $(gcc -Wall -Werror -Wextra $1) "${DEFAULT}"
+    echo "Compilation -W Testing...${COLORED}"
+    gcc -Wall -Werror -Wextra $1
+    # TODO: redirect gcc errors to colored echo
+    echo "${DEFAULT}"
     
-    echo "Execute Testing...${COLORED}" $(printf "$2" | ./a.out) "${DEFAULT}"
+    echo "Execute Testing...${COLORED}"
+    echo $(printf "$2" | ./a.out)
+    echo "${DEFAULT}"
     
     echo "\033[0;33m\nType"
     echo "for MACOS:     leaks -atExit -q -- ./a.out"
